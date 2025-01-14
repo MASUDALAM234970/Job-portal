@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
+import userRouter from "./routes/user.route.js";
 
 // Load environment variables
 dotenv.config();
@@ -23,8 +24,11 @@ app.get("/", (req, res) => {
   res.send("Welcome to my world!");
 });
 
+// User routes
+app.use("/api/v1/user", userRouter);
+
 // Server setup
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const server = app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
