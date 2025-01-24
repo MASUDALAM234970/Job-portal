@@ -7,8 +7,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { USER_API_END_POINT } from "../../utils/constant";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
+import { setLoading } from "@/redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, user } = useSelector((state) => state.auth);
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -18,12 +25,13 @@ export default function Login() {
   const ChangeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-  const navigate = useNavigate();
+
   const SubmitHandler = async (e) => {
     e.preventDefault();
     console.log(input);
 
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +44,10 @@ export default function Login() {
       }
     } catch (error) {
       console.log(error);
+
       toast.success(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -105,12 +116,15 @@ export default function Login() {
             </RadioGroup>
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Login
-          </button>
+          {loading ? (
+            <Button type="submit" className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
+            </Button>
+          ) : (
+            <Button className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors">
+              Signup
+            </Button>
+          )}
           <p className="text-center text-sm text-gray-500 mt-4">
             Don't have an account ?
             <a

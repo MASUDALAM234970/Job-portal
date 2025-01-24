@@ -8,8 +8,15 @@ import { USER_API_END_POINT } from "../../utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 export default function Signup() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, user } = useSelector((state) => state.auth);
   const [input, setInput] = useState({
     fullname: "",
     email: "",
@@ -26,8 +33,6 @@ export default function Signup() {
     setInput({ ...input, file: e.target.files[0] });
   };
 
-  const navigate = useNavigate();
-
   const SubmitHandler = async (e) => {
     e.preventDefault();
     console.log(input);
@@ -41,6 +46,7 @@ export default function Signup() {
       formData.append("file", input.file);
     }
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -54,6 +60,8 @@ export default function Signup() {
     } catch (error) {
       console.log(error);
       toast.success(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -154,13 +162,16 @@ export default function Signup() {
               />
             </div>
           </div>
+          {loading ? (
+            <Button type="submit" className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
+            </Button>
+          ) : (
+            <Button className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors">
+              Signup
+            </Button>
+          )}
 
-          <button
-            type="submit"
-            className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors"
-          >
-            Sign Up
-          </button>
           <p className="text-center text-sm text-gray-500 mt-4">
             Already have an account?{" "}
             <a
