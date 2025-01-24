@@ -1,15 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "../shared/Navbar";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "../ui/input";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { USER_API_END_POINT } from "../../utils/constant";
+import { toast } from "sonner";
 
 export default function Login() {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+    role: "",
+  });
+
+  const ChangeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const navigate = useNavigate();
+  const SubmitHandler = async (e) => {
+    e.preventDefault();
+    console.log(input);
+
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.success(error.response.data.message);
+    }
+  };
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <form className="w-full max-w-md bg-white shadow-lg rounded-lg p-8">
+        <form
+          onSubmit={SubmitHandler}
+          className="w-full max-w-md bg-white shadow-lg rounded-lg p-8"
+        >
           <h1 className="font-bold text-2xl text-gray-800 mb-6 text-center">
             Login
           </h1>
@@ -19,6 +56,9 @@ export default function Login() {
               Email
             </Label>
             <input
+              name="email"
+              onChange={ChangeEventHandler}
+              value={input.email}
               type="email"
               placeholder="Enter your email"
               className="w-full mt-2 px-4 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -30,6 +70,9 @@ export default function Login() {
               Password
             </Label>
             <input
+              name="password"
+              onChange={ChangeEventHandler}
+              value={input.password}
               type="password"
               placeholder="Enter your password"
               className="w-full mt-2 px-4 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -39,6 +82,8 @@ export default function Login() {
             <RadioGroup className="flex items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
                 <Input
+                  checked={input.role === "student"}
+                  onChange={ChangeEventHandler}
                   type="radio"
                   name="role"
                   value="student"
@@ -48,6 +93,8 @@ export default function Login() {
               </div>
               <div className="flex items-center space-x-2">
                 <Input
+                  checked={input.role === "Recuiter"}
+                  onChange={ChangeEventHandler}
                   type="radio"
                   name="role"
                   value="Recuiter"
