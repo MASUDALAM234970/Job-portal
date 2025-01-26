@@ -8,6 +8,7 @@ import Jobs from "./components/jobs";
 import NoPage from "./components/shared/NoPage";
 import Profile from "./components/Profile";
 import Browse from "./components/Browse";
+import JobDescription from "./components/JobDescription";
 
 const appRouter = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/jobs",
     element: <Jobs />,
+  },
+  {
+    path: "/description/:id",
+    element: <JobDescription />,
   },
   {
     path: "/*",
