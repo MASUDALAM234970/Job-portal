@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import { setLoading } from "@/redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../redux/authSlice";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ export default function Login() {
         withCredentials: true,
       });
       if (res.data.success) {
+        dispatch(setUser(res.data.user));
         toast.success(res.data.message);
         navigate("/");
       }

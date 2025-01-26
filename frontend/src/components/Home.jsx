@@ -10,7 +10,6 @@ import Footer from "./shared/Footer";
 export default function Home() {
   return (
     <div className="bg-gray-100">
-      Home
       <Navbar />
       <HeroSection />
       <CategoryCarousel />

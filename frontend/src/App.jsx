@@ -6,6 +6,8 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Jobs from "./components/jobs";
 import NoPage from "./components/shared/NoPage";
+import Profile from "./components/Profile";
+import Browse from "./components/Browse";
 
 const appRouter = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const appRouter = createBrowserRouter([
   {
     path: "/*",
     element: <NoPage />,
+  },
+  {
+    path: "/browse",
+    element: <Browse />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 

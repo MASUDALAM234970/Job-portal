@@ -5,12 +5,12 @@ import Job from "./Job";
 import { motion } from "framer-motion";
 
 const jobsArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
-
+import ScrollToTop from "./ScrollToTop";
 export default function jobs() {
   return (
     <div>
       <Navbar />
-
+      <ScrollToTop />
       <div className="max-w-7xl mx-auto mt-5">
         <div className="flex gap-5 mt-10 mx-10">
           <div className="w-20%">
