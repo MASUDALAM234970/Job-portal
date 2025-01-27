@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
-import jobSlice from "./jobSlice"; // Make sure the import path is correct
+import jobReducer from "./jobSlice"; // Ensure this path is correct
 
 const store = configureStore({
   reducer: {
-    auth: authReducer, // Correct placement inside reducer object
-    job: jobSlice, // Correct placement inside reducer object
+    auth: authReducer, // Match key names used in your application
+    job: jobReducer,
   },
 });
 

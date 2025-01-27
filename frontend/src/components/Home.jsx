@@ -6,8 +6,10 @@ import LatestJobs from "./LatestJobs";
 
 import ScrollToTop from "./ScrollToTop";
 import Footer from "./shared/Footer";
+import useGetAllJobs from "../hooks/useGetAllJobs";
 
 export default function Home() {
+  useGetAllJobs();
   return (
     <div className="bg-gray-100">
       <Navbar />
