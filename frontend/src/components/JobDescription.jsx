@@ -1,9 +1,22 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import useGetAllJobs from "../hooks/useGetAllJobs";
 
 export default function JobDescription() {
   const isApplied = true;
+  const { singleJob } = useSelector((store) => store.job);
+  const { user } = useSelector((store) => store.auth);
+  //const isIntiallyApplied = singleJob?.applications?.some(application => application.applicant === user?._id) || false;
+  //const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+
+  const params = useParams();
+  const jobId = params.id;
+
+  useGetAllJobs(jobId);
+  // const dispatch = useDispatch();
   return (
     <div className="max-w-7xl mx-auto my-10">
       <div className="flex items-center justify-between">
