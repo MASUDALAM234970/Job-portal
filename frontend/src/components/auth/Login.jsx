@@ -106,11 +106,11 @@ export default function Login() {
               </div>
               <div className="flex items-center space-x-2">
                 <Input
-                  checked={input.role === "Recuiter"}
                   onChange={ChangeEventHandler}
                   type="radio"
                   name="role"
-                  value="Recuiter"
+                  value="recruiter"
+                  checked={input.role === "recruiter"}
                   className="cursor-pointer" // Corrected here
                 />
                 <Label htmlFor="r2">Recuiter</Label>
@@ -124,7 +124,7 @@ export default function Login() {
             </Button>
           ) : (
             <Button className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors">
-              Signup
+              Login
             </Button>
           )}
           <p className="text-center text-sm text-gray-500 mt-4">

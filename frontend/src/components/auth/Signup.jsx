@@ -144,8 +144,8 @@ export default function Signup() {
                 <Input
                   type="radio"
                   name="role"
-                  value="Recuiter"
-                  checked={input.role === "Recuiter"}
+                  value="recruiter"
+                  checked={input.role === "recruiter"}
                   onChange={ChangeEventHandler}
                   className="cursor-pointer" // Corrected here
                 />
