@@ -8,6 +8,7 @@ import axios from "axios";
 import { COMPANY_API_END_POINT } from "../../utils/constant";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import { setSingleCompany } from "../../redux/companySlice";
 
 export default function CompanyCreate() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function CompanyCreate() {
         }
       );
       if (res?.data?.success) {
-        // dispatch(setSingleCompany(res.data.company));
+        dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
         const companyId = res?.data?.company?._id;
         navigate(`/admin/companies/${companyId}`);
