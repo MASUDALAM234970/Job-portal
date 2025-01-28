@@ -9,6 +9,7 @@ import NoPage from "./components/shared/NoPage";
 import Profile from "./components/Profile";
 import Browse from "./components/Browse";
 import JobDescription from "./components/JobDescription";
+import Companies from "./components/admin/Companies";
 
 const appRouter = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ const appRouter = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  // admin routes
+  {
+    path: "/admin/companies",
+    element: <Companies />,
   },
 ]);
 
