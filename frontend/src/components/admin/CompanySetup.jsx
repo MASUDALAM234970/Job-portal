@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Navbar } from "../shared/Navbar";
+
 import { Button } from "../ui/button";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import axios from "axios";
-import { COMPANY_API_END_POINT } from "../../utils/constant";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
+import { Navbar } from "../shared/Navbar";
 
-export default function CompanySetup() {
-  const navigate = useNavigate();
+const CompanySetup = () => {
   const params = useParams();
-  const [loading, setLoading] = useState(false);
-  const { singleCompany } = useSelector((store) => store.company);
+  useGetCompanyById(params.id);
   const [input, setInput] = useState({
     name: "",
     description: "",
@@ -22,6 +22,10 @@ export default function CompanySetup() {
     location: "",
     file: null,
   });
+  const { singleCompany } = useSelector((store) => store.company);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -30,6 +34,7 @@ export default function CompanySetup() {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
   };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -40,7 +45,6 @@ export default function CompanySetup() {
     if (input.file) {
       formData.append("file", input.file);
     }
-
     try {
       setLoading(true);
       const res = await axios.put(
@@ -74,6 +78,7 @@ export default function CompanySetup() {
       file: singleCompany.file || null,
     });
   }, [singleCompany]);
+
   return (
     <div>
       <Navbar />
@@ -90,8 +95,8 @@ export default function CompanySetup() {
             </Button>
             <h1 className="font-bold text-xl">Company Setup</h1>
           </div>
-          <div>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
               <Label>Company Name</Label>
               <Input
                 type="text"
@@ -100,7 +105,6 @@ export default function CompanySetup() {
                 onChange={changeEventHandler}
               />
             </div>
-
             <div>
               <Label>Description</Label>
               <Input
@@ -137,9 +141,9 @@ export default function CompanySetup() {
               />
             </div>
           </div>
-
           {loading ? (
             <Button className="w-full my-4">
+              {" "}
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
             </Button>
           ) : (
@@ -151,4 +155,6 @@ export default function CompanySetup() {
       </div>
     </div>
   );
-}
+};
+
+export default CompanySetup;
