@@ -9,12 +9,17 @@ import { useDispatch } from "react-redux";
 import CompaniesTable from "./CompaniesTable";
 import { Navbar } from "../shared/Navbar";
 import useGetAllCompanies from "../../hooks/useGetAllCompanies";
+import { setSearchCompanyByText } from "../../redux/companySlice";
 
 const Companies = () => {
   useGetAllCompanies();
   const [input, setInput] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setSearchCompanyByText(input));
+  }, [input]);
 
   return (
     <div>
@@ -24,7 +29,7 @@ const Companies = () => {
           <Input
             className="w-fit"
             placeholder="Filter by name"
-            // onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => setInput(e.target.value)}
           />
           <Button onClick={() => navigate("/admin/companies/create")}>
             New Company

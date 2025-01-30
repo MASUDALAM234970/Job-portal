@@ -9,28 +9,28 @@ import {
   TableRow,
 } from "../ui/table";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { Edit2, MoreHorizontal } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function CompaniesTable() {
+const CompaniesTable = () => {
   const { companies, searchCompanyByText } = useSelector(
     (store) => store.company
   );
-  const [filterCompany, setFilterCompany] = useState(companies);
+  const [filterCompany, setFilterCompany] = useState([]);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     const filteredCompany =
-      companies.length >= 0 &&
-      companies.filter((company) => {
-        if (!searchCompanyByText) {
-          return true;
-        }
+      companies?.filter((company) => {
+        if (!searchCompanyByText) return true;
         return company?.name
           ?.toLowerCase()
           .includes(searchCompanyByText.toLowerCase());
-      });
+      }) || [];
+
     setFilterCompany(filteredCompany);
   }, [companies, searchCompanyByText]);
 
@@ -47,22 +47,15 @@ export default function CompaniesTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companies.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={4} className="text-center">
-                You haven't registered any company
-              </TableCell>
-            </TableRow>
-          )}
-          {companies.map((company) => (
+          {filterCompany?.map((company) => (
             <TableRow key={company._id}>
               <TableCell>
                 <Avatar>
-                  <AvatarImage src={company.logo} />
+                  <AvatarImage src={company.logo} alt={company.name} />
                 </Avatar>
               </TableCell>
               <TableCell>{company.name}</TableCell>
-              <TableCell>{company.createdAt.split("T")[0]}</TableCell>
+              <TableCell>{company?.createdAt?.split("T")[0]}</TableCell>
               <TableCell className="text-right cursor-pointer">
                 <Popover>
                   <PopoverTrigger>
@@ -87,4 +80,6 @@ export default function CompaniesTable() {
       </Table>
     </div>
   );
-}
+};
+
+export default CompaniesTable;
