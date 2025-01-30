@@ -15,7 +15,7 @@ A full-stack job portal application built using JavaScript, React.js, Tailwind C
 
 
 ### Frontend:
--javaScript
+ -javaScript
 - React.js
 - Tailwind CSS
 
@@ -32,7 +32,7 @@ A full-stack job portal application built using JavaScript, React.js, Tailwind C
 
 ### Clone the repository
 ```bash
-git clone https://github.com/yourusername/job-portal.git
+git clone https://github.com/masudalam234970/job-portal.git
 cd job-portal
 ```
 
@@ -83,5 +83,5 @@ Pull requests are welcome. Please open an issue first to discuss any changes.
 This project is open-source and available under the [MIT License](LICENSE).
 
 ## Contact
-For questions or collaboration, reach out via [your-email@example.com](mailto:your-email@example.com).
+For questions or collaboration, reach out via [mdmasudalam2349@gamil.com).
 
